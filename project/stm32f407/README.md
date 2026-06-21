@@ -65,19 +65,19 @@ We use '\n' to wrap lines.If your serial port assistant displays exceptions (e.g
 4. Run as3935 register test.
 
    ```shell
-   as3935 (-t reg | --test=reg) [--addr=<0 | 1 | 2 | 3>] [--interface=<iic | spi>]
+   as3935 (-t reg | --test=reg) [--addr=<1 | 2 | 3>] [--interface=<iic | spi>]
    ```
 
 5. Run as3935 read test, num means the test times.
 
    ```shell
-   as3935 (-t read | --test=read) [--addr=<0 | 1 | 2 | 3>] [--interface=<iic | spi>] [--times=<num>]
+   as3935 (-t read | --test=read) [--addr=<1 | 2 | 3>] [--interface=<iic | spi>] [--times=<num>]
    ```
 
 6. Run as3935 basic function, num is the read times.
 
    ```shell
-   as3935 (-e basic | --example=basic) [--addr=<0 | 1 | 2 | 3>] [--interface=<iic | spi>] [--times=<num>]
+   as3935 (-e basic | --example=basic) [--addr=<1 | 2 | 3>] [--interface=<iic | spi>] [--times=<num>]
    ```
 
 #### 3.2 Command Example
@@ -109,7 +109,7 @@ as3935: INT connected to GPIOB PIN0.
 ```
 
 ```shell
-as3935 -t reg --addr=0 --interface=iic
+as3935 -t reg --addr=1 --interface=iic
 
 as3935: chip is AMS AS3935.
 as3935: manufacturer is AMS.
@@ -127,8 +127,6 @@ as3935: check interface ok.
 as3935: set interface spi.
 as3935: check interface ok.
 as3935: as3935_set_addr_pin/as3935_get_addr_pin test.
-as3935: set addr pin address0.
-as3935: check addr pin ok.
 as3935: set addr pin address1.
 as3935: check addr pin ok.
 as3935: set addr pin address2.
@@ -234,7 +232,7 @@ as3935: finish register test.
 ```
 
 ```shell
-as3935 -t read --addr=0 --interface=iic --times=1
+as3935 -t read --addr=1 --interface=iic --times=1
 
 as3935: chip is AMS AS3935.
 as3935: manufacturer is AMS.
@@ -254,7 +252,7 @@ as3935: finish read test.
 ```
 
 ```shell
-as3935 -e basic --addr=0 --interface=iic --times=1
+as3935 -e basic --addr=1 --interface=iic --times=1
 
 as3935: irq lightning interrupt.
 as3935: lightning energy is 200.
@@ -269,12 +267,12 @@ Usage:
   as3935 (-i | --information)
   as3935 (-h | --help)
   as3935 (-p | --port)
-  as3935 (-t reg | --test=reg) [--addr=<0 | 1 | 2 | 3>] [--interface=<iic | spi>]
-  as3935 (-t read | --test=read) [--addr=<0 | 1 | 2 | 3>] [--interface=<iic | spi>] [--times=<num>]
-  as3935 (-e basic | --example=basic) [--addr=<0 | 1 | 2 | 3>] [--interface=<iic | spi>] [--times=<num>]
+  as3935 (-t reg | --test=reg) [--addr=<1 | 2 | 3>] [--interface=<iic | spi>]
+  as3935 (-t read | --test=read) [--addr=<1 | 2 | 3>] [--interface=<iic | spi>] [--times=<num>]
+  as3935 (-e basic | --example=basic) [--addr=<1 | 2 | 3>] [--interface=<iic | spi>] [--times=<num>]
 
 Options:
-      --addr=<0 | 1 | 2 | 3>         Set the chip address.([default: 0])
+      --addr=<1 | 2 | 3>             Set the chip address.([default: 1])
   -e <basic>, --example=<basic>      Run the driver example.
   -h, --help                         Show the help.
   -i, --information                  Show the chip information.

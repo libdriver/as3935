@@ -128,7 +128,7 @@ uint8_t as3935(uint8_t argc, char **argv)
     };
     char type[33] = "unknown";
     uint32_t times = 3;
-    as3935_address_t addr = AS3935_ADDRESS_0;
+    as3935_address_t addr = AS3935_ADDRESS_1;
     as3935_interface_t interface = AS3935_INTERFACE_IIC;
     
     /* if no params */
@@ -204,11 +204,7 @@ uint8_t as3935(uint8_t argc, char **argv)
             case 1 :
             {
                 /* set the addr pin */
-                if (strcmp("0", optarg) == 0)
-                {
-                    addr = AS3935_ADDRESS_0;
-                }
-                else if (strcmp("1", optarg) == 0)
+                if (strcmp("1", optarg) == 0)
                 {
                     addr = AS3935_ADDRESS_1;
                 }
@@ -365,12 +361,12 @@ uint8_t as3935(uint8_t argc, char **argv)
         as3935_interface_debug_print("  as3935 (-i | --information)\n");
         as3935_interface_debug_print("  as3935 (-h | --help)\n");
         as3935_interface_debug_print("  as3935 (-p | --port)\n");
-        as3935_interface_debug_print("  as3935 (-t reg | --test=reg) [--addr=<0 | 1 | 2 | 3>] [--interface=<iic | spi>]\n");
-        as3935_interface_debug_print("  as3935 (-t read | --test=read) [--addr=<0 | 1 | 2 | 3>] [--interface=<iic | spi>] [--times=<num>]\n");
-        as3935_interface_debug_print("  as3935 (-e basic | --example=basic) [--addr=<0 | 1 | 2 | 3>] [--interface=<iic | spi>] [--times=<num>]\n");
+        as3935_interface_debug_print("  as3935 (-t reg | --test=reg) [--addr=<1 | 2 | 3>] [--interface=<iic | spi>]\n");
+        as3935_interface_debug_print("  as3935 (-t read | --test=read) [--addr=<1 | 2 | 3>] [--interface=<iic | spi>] [--times=<num>]\n");
+        as3935_interface_debug_print("  as3935 (-e basic | --example=basic) [--addr=<1 | 2 | 3>] [--interface=<iic | spi>] [--times=<num>]\n");
         as3935_interface_debug_print("\n");
         as3935_interface_debug_print("Options:\n");
-        as3935_interface_debug_print("      --addr=<0 | 1 | 2 | 3>         Set the chip address.([default: 0])\n");
+        as3935_interface_debug_print("      --addr=<1 | 2 | 3>             Set the chip address.([default: 1])\n");
         as3935_interface_debug_print("  -e <basic>, --example=<basic>      Run the driver example.\n");
         as3935_interface_debug_print("  -h, --help                         Show the help.\n");
         as3935_interface_debug_print("  -i, --information                  Show the chip information.\n");

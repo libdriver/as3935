@@ -150,25 +150,7 @@ uint8_t as3935_register_test(as3935_interface_t interface, as3935_address_t addr
     
     /* as3935_set_addr_pin/as3935_get_addr_pin test */
     as3935_interface_debug_print("as3935: as3935_set_addr_pin/as3935_get_addr_pin test.\n");
-    
-    /* address0 */
-    res = as3935_set_addr_pin(&gs_handle, AS3935_ADDRESS_0);
-    if (res != 0)
-    {
-        as3935_interface_debug_print("as3935: set addr pin failed.\n");
-       
-        return 1;
-    }
-    as3935_interface_debug_print("as3935: set addr pin address0.\n");
-    res = as3935_get_addr_pin(&gs_handle, &addr_check);
-    if (res != 0)
-    {
-        as3935_interface_debug_print("as3935: get addr pin failed.\n");
-       
-        return 1;
-    }
-    as3935_interface_debug_print("as3935: check addr pin %s.\n", (AS3935_ADDRESS_0 == addr_check) ? "ok" : "error");
-    
+
     /* address1 */
     res = as3935_set_addr_pin(&gs_handle, AS3935_ADDRESS_1);
     if (res != 0)

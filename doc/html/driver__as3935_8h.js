@@ -15,7 +15,6 @@ var driver__as3935_8h =
     [ "as3935_handle_t", "group__as3935__basic__driver.html#ga9a96407c644c311cdd8f1acf7da9b157", null ],
     [ "as3935_info_t", "group__as3935__basic__driver.html#ga88f138bf22a8c5c61b0590b06c20e659", null ],
     [ "as3935_address_t", "group__as3935__basic__driver.html#ga7b28d6b145be8411d74c49a030e626c7", [
-      [ "AS3935_ADDRESS_0", "group__as3935__basic__driver.html#gga7b28d6b145be8411d74c49a030e626c7a4b5bf17bf1bb1d8ba611d1726c2b40cc", null ],
       [ "AS3935_ADDRESS_1", "group__as3935__basic__driver.html#gga7b28d6b145be8411d74c49a030e626c7a6167d10e32a272e7747a7025c000140f", null ],
       [ "AS3935_ADDRESS_2", "group__as3935__basic__driver.html#gga7b28d6b145be8411d74c49a030e626c7af92b44348169f5e2bf0ac96780d0f205", null ],
       [ "AS3935_ADDRESS_3", "group__as3935__basic__driver.html#gga7b28d6b145be8411d74c49a030e626c7aff28b5e8f5304f1d977268135c0a8aec", null ]

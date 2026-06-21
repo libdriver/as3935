@@ -70,7 +70,6 @@ typedef enum
  */
 typedef enum
 {
-    AS3935_ADDRESS_0 = 0x00,        /**< addr1 - add0 -> low - low  */
     AS3935_ADDRESS_1 = 0x02,        /**< addr1 - add0 -> low - high */
     AS3935_ADDRESS_2 = 0x04,        /**< addr1 - add0 -> high - low */
     AS3935_ADDRESS_3 = 0x06,        /**< addr1 - add0 -> high - high */
