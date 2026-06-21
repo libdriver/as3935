@@ -1918,6 +1918,7 @@ uint8_t as3935_irq_handler(as3935_handle_t *handle)
         return 3;                                                                                   /* return error */
     }
     
+    handle->delay_ms(2);                                                                            /* delay 2ms */
     res = a_as3935_iic_spi_read(handle, AS3935_REG_NUMBER_3, &prev, 1);                             /* read config */
     if (res != 0)                                                                                   /* check the result */
     {
