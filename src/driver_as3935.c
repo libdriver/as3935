@@ -1088,7 +1088,105 @@ uint8_t as3935_read_distance(as3935_handle_t *handle, uint8_t *raw, int8_t *km)
     }
     else
     {
-        *km = (int8_t)(*raw);                                                  /* convert to km */
+        switch (*raw)                                                          /* choose the distance */
+        {
+            case 0x01 :                                                        /* 0x01 */
+            {
+                *km = 0;                                                       /* convert to km */
+                
+                break;                                                         /* break */
+            }
+            case 0x05 :                                                        /* 0x05 */
+            {
+                *km = 5;                                                       /* convert to km */
+                
+                break;                                                         /* break */
+            }
+            case 0x06 :                                                        /* 0x06 */
+            {
+                *km = 6;                                                       /* convert to km */
+                
+                break;                                                         /* break */
+            }
+            case 0x08 :                                                        /* 0x08 */
+            {
+                *km = 8;                                                       /* convert to km */
+                
+                break;                                                         /* break */
+            }
+            case 0x0A :                                                        /* 0x0A */
+            {
+                *km = 10;                                                      /* convert to km */
+                
+                break;                                                         /* break */
+            }
+            case 0x0C :                                                        /* 0x0C */
+            {
+                *km = 12;                                                      /* convert to km */
+                
+                break;                                                         /* break */
+            }
+            case 0x0E :                                                        /* 0x0E */
+            {
+                *km = 14;                                                      /* convert to km */
+                
+                break;                                                         /* break */
+            }
+            case 0x11 :                                                        /* 0x11 */
+            {
+                *km = 17;                                                      /* convert to km */
+                
+                break;                                                         /* break */
+            }
+            case 0x14 :                                                        /* 0x14 */
+            {
+                *km = 20;                                                      /* convert to km */
+                
+                break;                                                         /* break */
+            }
+            case 0x18 :                                                        /* 0x18 */
+            {
+                *km = 24;                                                      /* convert to km */
+                
+                break;                                                         /* break */
+            }
+            case 0x1B :                                                        /* 0x1B */
+            {
+                *km = 27;                                                      /* convert to km */
+                
+                break;                                                         /* break */
+            }
+            case 0x1F :                                                        /* 0x1F */
+            {
+                *km = 31;                                                      /* convert to km */
+                
+                break;                                                         /* break */
+            }
+            case 0x22 :                                                        /* 0x22 */
+            {
+                *km = 34;                                                      /* convert to km */
+                
+                break;                                                         /* break */
+            }
+            case 0x25 :                                                        /* 0x25 */
+            {
+                *km = 37;                                                      /* convert to km */
+                
+                break;                                                         /* break */
+            }
+            case 0x28 :                                                        /* 0x28 */
+            {
+                *km = 40;                                                      /* convert to km */
+                
+                break;                                                         /* break */
+            }
+            default :                                                          /* default */
+            {
+                *km = -1;                                                      /* error */
+                
+                break;                                                         /* break */
+            }
+        }
     }
     
     return 0;                                                                  /* success return 0 */
