@@ -236,34 +236,83 @@ uint8_t as3935_set_power_down(as3935_handle_t *handle, as3935_bool_t enable)
 {
     uint8_t res;
     uint8_t prev;
+    uint8_t command;
     
-    if (handle == NULL)                                                        /* check handle */
+    if (handle == NULL)                                                                 /* check handle */
     {
-        return 2;                                                              /* return error */
+        return 2;                                                                       /* return error */
     }
-    if (handle->inited != 1)                                                   /* check handle initialization */
+    if (handle->inited != 1)                                                            /* check handle initialization */
     {
-        return 3;                                                              /* return error */
+        return 3;                                                                       /* return error */
     }
     
-    res = a_as3935_iic_spi_read(handle, AS3935_REG_NUMBER_0, &prev, 1);        /* read config */
-    if (res != 0)                                                              /* check the result */
+    res = a_as3935_iic_spi_read(handle, AS3935_REG_NUMBER_0, &prev, 1);                 /* read config */
+    if (res != 0)                                                                       /* check the result */
     {
-        handle->debug_print("as3935: read reg 0 failed.\n");                   /* read reg 0 failed */
+        handle->debug_print("as3935: read reg 0 failed.\n");                            /* read reg 0 failed */
         
-        return 1;                                                              /* return error */
+        return 1;                                                                       /* return error */
     }
-    prev &= ~(1 << 0);                                                         /* clear settings */
-    prev |= enable << 0;                                                       /* set bool */
-    res = a_as3935_iic_spi_write(handle, AS3935_REG_NUMBER_0, &prev, 1);       /* write config */
-    if (res != 0)                                                              /* check the result */
+    prev &= ~(1 << 0);                                                                  /* clear settings */
+    prev |= enable << 0;                                                                /* set bool */
+    res = a_as3935_iic_spi_write(handle, AS3935_REG_NUMBER_0, &prev, 1);                /* write config */
+    if (res != 0)                                                                       /* check the result */
     {
-        handle->debug_print("as3935: write reg 0 failed.\n");                  /* write reg 0 failed */
+        handle->debug_print("as3935: write reg 0 failed.\n");                           /* write reg 0 failed */
         
-        return 1;                                                              /* return error */
+        return 1;                                                                       /* return error */
     }
     
-    return 0;                                                                  /* success return 0 */
+    if (enable == AS3935_BOOL_FALSE)                                                    /* exit power down mode */
+    {
+        handle->delay_ms(2);                                                            /* wait 2ms */
+        
+        command = 0x96U;                                                                /* direct command  */
+        res = a_as3935_iic_spi_write(handle, AS3935_REG_CALIB_RCO, &command, 1);        /* write command */
+        if (res != 0)                                                                   /* check the result */
+        {
+            handle->debug_print("as3935: write calib rco command failed.\n");           /* write calib rco command failed */
+            
+            return 1;                                                                   /* return error */
+        }
+        handle->delay_ms(2);                                                            /* wait 2ms */
+        
+        res = a_as3935_iic_spi_read(handle, AS3935_REG_NUMBER_8, &prev, 1);             /* read config */
+        if (res != 0)                                                                   /* check the result */
+        {
+            handle->debug_print("as3935: read reg 8 failed.\n");                        /* read reg 8 failed */
+            
+            return 1;                                                                   /* return error */
+        }
+        prev |= 1 << 6;                                                                 /* set bit */
+        res = a_as3935_iic_spi_write(handle, AS3935_REG_NUMBER_8, &prev, 1);            /* write config */
+        if (res != 0)                                                                   /* check the result */
+        {
+            handle->debug_print("as3935: write reg 8 failed.\n");                       /* write reg 8 failed */
+            
+            return 1;                                                                   /* return error */
+        }
+        handle->delay_ms(2);                                                            /* wait 2 ms */
+        
+        res = a_as3935_iic_spi_read(handle, AS3935_REG_NUMBER_8, &prev, 1);             /* read config */
+        if (res != 0)                                                                   /* check the result */
+        {
+            handle->debug_print("as3935: read reg 8 failed.\n");                        /* read reg 8 failed */
+            
+            return 1;                                                                   /* return error */
+        }
+        prev &= ~(1 << 6);                                                              /* clear bit */
+        res = a_as3935_iic_spi_write(handle, AS3935_REG_NUMBER_8, &prev, 1);            /* write config */
+        if (res != 0)                                                                   /* check the result */
+        {
+            handle->debug_print("as3935: write reg 8 failed.\n");                       /* write reg 8 failed */
+            
+            return 1;                                                                   /* return error */
+        }
+    }
+    
+    return 0;                                                                           /* success return 0 */
 }
 
 /**
@@ -581,6 +630,11 @@ uint8_t as3935_set_clear_statistics(as3935_handle_t *handle, as3935_bool_t enabl
         return 3;                                                              /* return error */
     }
     
+    if (enable == AS3935_BOOL_FALSE)                                           /* no clear requested */
+    {
+        return 0;                                                              /* success return 0 */
+    }
+    
     res = a_as3935_iic_spi_read(handle, AS3935_REG_NUMBER_2, &prev, 1);        /* read config */
     if (res != 0)                                                              /* check the result */
     {
@@ -588,8 +642,41 @@ uint8_t as3935_set_clear_statistics(as3935_handle_t *handle, as3935_bool_t enabl
         
         return 1;                                                              /* return error */
     }
-    prev &= ~(1 << 6);                                                         /* clear settings */
-    prev |= enable << 6;                                                       /* set bool */
+    prev |= 1 << 6;                                                            /* set bool */
+    res = a_as3935_iic_spi_write(handle, AS3935_REG_NUMBER_2, &prev, 1);       /* write config */
+    if (res != 0)                                                              /* check the result */
+    {
+        handle->debug_print("as3935: write reg 2 failed.\n");                  /* write reg 2 failed */
+        
+        return 1;                                                              /* return error */
+    }
+    handle->delay_ms(2);                                                       /* wait 2 ms */
+    
+    res = a_as3935_iic_spi_read(handle, AS3935_REG_NUMBER_2, &prev, 1);        /* read config */
+    if (res != 0)                                                              /* check the result */
+    {
+        handle->debug_print("as3935: read reg 2 failed.\n");                   /* read reg 2 failed */
+        
+        return 1;                                                              /* return error */
+    }
+    prev &= ~(1 << 6);                                                         /* clear */
+    res = a_as3935_iic_spi_write(handle, AS3935_REG_NUMBER_2, &prev, 1);       /* write config */
+    if (res != 0)                                                              /* check the result */
+    {
+        handle->debug_print("as3935: write reg 2 failed.\n");                  /* write reg 2 failed */
+        
+        return 1;                                                              /* return error */
+    }
+    handle->delay_ms(2);                                                       /* wait 2 ms */
+    
+    res = a_as3935_iic_spi_read(handle, AS3935_REG_NUMBER_2, &prev, 1);        /* read config */
+    if (res != 0)                                                              /* check the result */
+    {
+        handle->debug_print("as3935: read reg 2 failed.\n");                   /* read reg 2 failed */
+        
+        return 1;                                                              /* return error */
+    }
+    prev |= 1 << 6;                                                            /* set bool */
     res = a_as3935_iic_spi_write(handle, AS3935_REG_NUMBER_2, &prev, 1);       /* write config */
     if (res != 0)                                                              /* check the result */
     {
